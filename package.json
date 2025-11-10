@@ -15,7 +15,7 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "recharts": "^2.15.4",
-    "react-globe.gl": "^4.8.2",
+    "react-globe.gl": "^4.7.10",
     "three": "^0.160.0"
   },
   "devDependencies": {
