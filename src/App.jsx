@@ -41,6 +41,7 @@ const AnimatedCounter = ({ value, duration = 2 }) => {
 
 function App() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [showGlobe, setShowGlobe] = useState(false)
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -194,7 +195,7 @@ function App() {
     const temperature = payload.find((item) => item.dataKey === 'temperature')
 
     return (
-      <div className="rounded-xl border border-emerald-200 bg-white/95 p-3 text-xs text-slate-800 shadow-lg backdrop-blur">
+      <div className="p-3 text-xs border shadow-lg rounded-xl border-emerald-200 bg-white/95 text-slate-800 backdrop-blur">
         <p className="text-sm font-semibold text-emerald-700">{label}</p>
         <p>Plastic Production: {plastic?.value} Mt</p>
         <p>Global Temperature: {temperature?.value.toFixed(2)} degC anomaly</p>
@@ -211,7 +212,7 @@ function App() {
     const co2 = payload.find((item) => item.dataKey === 'co2')
 
     return (
-      <div className="rounded-xl border border-emerald-200 bg-white/92 p-3 text-xs text-slate-800 shadow-lg backdrop-blur">
+      <div className="p-3 text-xs border shadow-lg rounded-xl border-emerald-200 bg-white/92 text-slate-800 backdrop-blur">
         <p className="text-sm font-semibold">{label} systems</p>
         <p>Microplastic exposure: {exposure?.value} index</p>
         <p>CO2 burden: {co2?.value} Mt</p>
@@ -223,7 +224,7 @@ function App() {
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-slate-100 text-slate-900">
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute inset-0"
+        className="absolute inset-0 pointer-events-none"
         initial={{ backgroundPosition: '0% 50%' }}
         animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
         transition={{ duration: 35, ease: 'linear', repeat: Infinity }}
@@ -235,13 +236,13 @@ function App() {
       />
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute -left-20 top-20 h-72 w-72 rounded-full bg-gradient-to-r from-emerald-400/40 to-blue-500/20 blur-3xl"
+        className="absolute rounded-full pointer-events-none -left-20 top-20 h-72 w-72 bg-gradient-to-r from-emerald-400/40 to-blue-500/20 blur-3xl"
         animate={{ y: [0, 25, -15, 0], rotate: [0, 6, -4, 0] }}
         transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
       />
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute -right-12 bottom-16 h-64 w-64 rounded-full bg-gradient-to-r from-cyan-400/30 to-purple-500/20 blur-3xl"
+        className="absolute w-64 h-64 rounded-full pointer-events-none -right-12 bottom-16 bg-gradient-to-r from-cyan-400/30 to-purple-500/20 blur-3xl"
         animate={{ y: [0, -20, 10, 0], rotate: [0, -8, 6, 0] }}
         transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
       />
@@ -265,7 +266,7 @@ function App() {
         <motion.div
           key={`particle-${i}`}
           aria-hidden
-          className="pointer-events-none absolute h-2 w-2 rounded-full bg-emerald-400/30"
+          className="absolute w-2 h-2 rounded-full pointer-events-none bg-emerald-400/30"
           style={{
             left: `${15 + i * 12}%`,
             top: `${20 + (i % 3) * 30}%`,
@@ -287,7 +288,7 @@ function App() {
       {/* Mouse parallax effect */}
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute inset-0"
+        className="absolute inset-0 pointer-events-none"
         style={{
           background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(16,185,129,0.1), transparent 40%)`,
         }}
@@ -303,7 +304,7 @@ function App() {
           <a href="#vision" className="flex items-center gap-2 font-semibold text-emerald-700">
             ⚛️ Eco-Synergy
           </a>
-          <div className="flex flex-1 justify-end gap-4 sm:gap-6">
+          <div className="flex justify-end flex-1 gap-4 sm:gap-6">
             {navItems.map((item, index) => (
               <motion.a
                 key={item.href}
@@ -316,10 +317,10 @@ function App() {
                   y: -2,
                 }}
                 whileTap={{ scale: 0.95 }}
-                className="rounded-full border border-transparent px-3 py-1 text-slate-600 transition hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 relative overflow-hidden"
+                className="relative px-3 py-1 overflow-hidden transition border border-transparent rounded-full text-slate-600 hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700"
               >
                 <motion.span
-                  className="absolute inset-0 bg-emerald-100 rounded-full"
+                  className="absolute inset-0 rounded-full bg-emerald-100"
                   initial={{ scale: 0, opacity: 0 }}
                   whileHover={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.3 }}
@@ -331,7 +332,7 @@ function App() {
         </div>
       </motion.nav>
 
-      <div className="relative mx-auto flex max-w-7xl flex-col gap-20 px-6 pb-28 pt-24 sm:px-10 lg:px-12">
+      <div className="relative flex flex-col gap-20 px-6 pt-24 mx-auto max-w-7xl pb-28 sm:px-10 lg:px-12">
         <motion.header
           id="vision"
           initial={{ opacity: 0, y: 32 }}
@@ -340,7 +341,7 @@ function App() {
           className="grid gap-12 rounded-3xl border border-emerald-100/80 bg-white/70 p-10 shadow-xl backdrop-blur lg:grid-cols-[1.2fr,1fr] lg:items-center"
         >
           <div className="space-y-6">
-            <p className="inline-flex items-center gap-2 rounded-full border border-emerald-100 bg-emerald-50 px-4 py-1 text-sm font-medium tracking-wide text-emerald-600">
+            <p className="inline-flex items-center gap-2 px-4 py-1 text-sm font-medium tracking-wide border rounded-full border-emerald-100 bg-emerald-50 text-emerald-600">
               ⚛️ Eco-Synergy Insight Dashboard
             </p>
             <motion.h1
@@ -366,7 +367,7 @@ function App() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.35, duration: 0.8, ease: 'easeOut' }}
-              className="rounded-3xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm text-emerald-700 sm:text-base"
+              className="px-5 py-4 text-sm border rounded-3xl border-emerald-200 bg-emerald-50 text-emerald-700 sm:text-base"
             >
               <span className="font-semibold text-emerald-800">Vision:</span>{' '}
               Bridging Climate, Plastic, and Health Data for Global Insight.
@@ -376,7 +377,7 @@ function App() {
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 1.1, ease: 'easeOut' }}
-            className="relative h-64 overflow-hidden rounded-3xl border border-emerald-100 bg-gradient-to-br from-slate-900/70 to-slate-900/40 shadow-2xl backdrop-blur lg:h-80"
+            className="relative h-64 overflow-hidden border shadow-2xl rounded-3xl border-emerald-100 bg-gradient-to-br from-slate-900/70 to-slate-900/40 backdrop-blur lg:h-80"
           >
             <motion.div
               className="absolute inset-0"
@@ -397,12 +398,12 @@ function App() {
               transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
             />
             <motion.div
-              className="absolute bottom-8 left-1/2 flex h-24 w-24 -translate-x-1/2 items-center justify-center rounded-full border border-emerald-400/50 bg-emerald-500/20 shadow-inner shadow-emerald-500/40"
+              className="absolute flex items-center justify-center w-24 h-24 -translate-x-1/2 border rounded-full shadow-inner bottom-8 left-1/2 border-emerald-400/50 bg-emerald-500/20 shadow-emerald-500/40"
               animate={{ rotate: [0, 360] }}
               transition={{ duration: 36, repeat: Infinity, ease: 'linear' }}
             >
               <motion.div
-                className="h-16 w-16 rounded-full border border-emerald-200/40 bg-gradient-to-br from-emerald-500/40 to-blue-400/30"
+                className="w-16 h-16 border rounded-full border-emerald-200/40 bg-gradient-to-br from-emerald-500/40 to-blue-400/30"
                 animate={{
                   rotate: [0, -360],
                   scale: [1, 1.08, 1],
@@ -419,7 +420,7 @@ function App() {
 
         <section
           id="objectives"
-          className="grid gap-6 rounded-3xl border border-emerald-100 bg-white/80 p-8 shadow-xl lg:grid-cols-4 lg:gap-8"
+          className="grid gap-6 p-8 border shadow-xl rounded-3xl border-emerald-100 bg-white/80 lg:grid-cols-4 lg:gap-8"
         >
           {objectives.map((objective, index) => (
             <motion.article
@@ -433,7 +434,7 @@ function App() {
                 rotateY: -8,
                 translateY: -12,
               }}
-              className="relative overflow-hidden rounded-3xl border border-emerald-100 bg-gradient-to-br from-white via-emerald-50/60 to-white p-6 shadow-lg transition-transform"
+              className="relative p-6 overflow-hidden transition-transform border shadow-lg rounded-3xl border-emerald-100 bg-gradient-to-br from-white via-emerald-50/60 to-white"
             >
               <motion.div
                 aria-hidden
@@ -446,10 +447,28 @@ function App() {
                     'linear-gradient(135deg, rgba(16,185,129,0.25), rgba(20,184,166,0.3))',
                 }}
               />
-              <div className="relative flex h-full flex-col gap-4">
+              <motion.div
+                className="absolute inset-0 opacity-0"
+                whileHover={{ opacity: 1 }}
+                style={{
+                  background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
+                  backgroundSize: '200% 100%',
+                }}
+                animate={{
+                  backgroundPosition: ['200% 0', '-200% 0'],
+                }}
+                transition={{
+                  backgroundPosition: { duration: 2, repeat: Infinity, repeatDelay: 1 },
+                  opacity: { duration: 0.4 },
+                }}
+              />
+              <div className="relative z-10 flex flex-col h-full gap-4">
                 <motion.span
                   className="text-2xl"
-                  animate={{ y: [0, -8, 0] }}
+                  animate={{
+                    y: [0, -8, 0],
+                    rotate: [0, 5, -5, 0],
+                  }}
                   transition={{
                     delay: index * 0.2,
                     duration: 4,
@@ -459,9 +478,13 @@ function App() {
                 >
                   {objective.icon}
                 </motion.span>
-                <h3 className="text-lg font-semibold text-slate-900">
+                <motion.h3
+                  className="text-lg font-semibold text-slate-900"
+                  whileHover={{ x: 4 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
+                >
                   {objective.title}
-                </h3>
+                </motion.h3>
                 <p className="text-sm text-slate-600">
                   {objective.detail}
                 </p>
@@ -472,7 +495,7 @@ function App() {
 
         <section
           id="architecture"
-          className="rounded-3xl border border-emerald-100 bg-white/85 p-10 shadow-xl backdrop-blur"
+          className="p-10 border shadow-xl rounded-3xl border-emerald-100 bg-white/85 backdrop-blur"
         >
           <motion.h2
             initial={{ opacity: 0, y: 16 }}
@@ -486,21 +509,34 @@ function App() {
           <p className="mt-3 text-sm text-slate-600">
             Data to Processing to Analytics to Visualization to Insights - each layer orchestrated to deliver timely, human-impacting intelligence.
           </p>
-          <div className="mt-8 grid gap-6 lg:grid-cols-5">
+          <div className="grid gap-6 mt-8 lg:grid-cols-5">
             {architectureLayers.map((layer, index) => (
               <motion.div
                 key={layer.id}
-                className="relative flex flex-col gap-4 rounded-3xl border border-emerald-100 bg-gradient-to-br from-white via-emerald-50/60 to-white p-6 shadow-lg"
+                className="relative flex flex-col gap-4 p-6 border shadow-lg rounded-3xl border-emerald-100 bg-gradient-to-br from-white via-emerald-50/60 to-white"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ delay: index * 0.15, duration: 0.7, ease: 'easeOut' }}
               >
                 <motion.div
-                  className="flex h-12 w-12 items-center justify-center rounded-full border border-emerald-300/70 bg-emerald-100 text-xl text-emerald-700"
+                  className="relative flex items-center justify-center w-12 h-12 text-xl border rounded-full border-emerald-300/70 bg-emerald-100 text-emerald-700"
                   animate={{ scale: [1, 1.08, 1] }}
                   transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+                  whileHover={{ scale: 1.15, rotate: 360 }}
                 >
+                  <motion.div
+                    className="absolute inset-0 border-2 rounded-full border-emerald-400"
+                    animate={{
+                      scale: [1, 1.5, 1],
+                      opacity: [0.5, 0, 0.5],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: 'easeOut',
+                    }}
+                  />
                   {layer.id}
                 </motion.div>
                 <h3 className="text-lg font-semibold text-slate-900">
@@ -512,14 +548,14 @@ function App() {
                 {index < architectureLayers.length - 1 && (
                   <motion.span
                     aria-hidden
-                    className="absolute -right-5 top-1/2 hidden h-10 w-10 -translate-y-1/2 rounded-full border border-emerald-200 bg-emerald-50/80 lg:grid place-items-center"
+                    className="absolute hidden w-10 h-10 -translate-y-1/2 border rounded-full -right-5 top-1/2 border-emerald-200 bg-emerald-50/80 lg:grid place-items-center"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1, rotate: [0, 6, -4, 0] }}
                     transition={{ delay: index * 0.2 + 0.4, duration: 1.2, repeat: Infinity, repeatType: 'mirror' }}
                   >
                     <svg
                       aria-hidden
-                      className="h-5 w-5 text-emerald-600"
+                      className="w-5 h-5 text-emerald-600"
                       viewBox="0 0 24 24"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
@@ -544,7 +580,7 @@ function App() {
           className="grid gap-10 rounded-3xl border border-emerald-100 bg-white/85 p-10 shadow-xl lg:grid-cols-[1.2fr,1fr] lg:items-start"
         >
           <motion.div
-            className="rounded-3xl border border-emerald-100 bg-white/90 p-8 shadow-lg"
+            className="p-8 border shadow-lg rounded-3xl border-emerald-100 bg-white/90"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.35 }}
@@ -556,7 +592,13 @@ function App() {
             <p className="mt-4 text-sm text-slate-600 sm:text-base">
               Plastic Production vs Global Temperature anomaly (1990 - 2025)
             </p>
-            <div className="mt-8 h-72 w-full">
+            <motion.div
+              className="w-full mt-8 h-72"
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ delay: 0.3, duration: 0.8, ease: 'easeOut' }}
+            >
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={insightData}>
                   <defs>
@@ -615,6 +657,17 @@ function App() {
                     }}
                   />
                   <Tooltip content={<CustomTooltip />} />
+                  <Legend
+                    verticalAlign="top"
+                    align="right"
+                    iconType="circle"
+                    wrapperStyle={{
+                      fontSize: 12,
+                      color: '#0f172a',
+                      marginBottom: 12,
+                      paddingTop: 8,
+                    }}
+                  />
                   <Area
                     yAxisId="left"
                     type="monotone"
@@ -622,7 +675,7 @@ function App() {
                     stroke="#34d399"
                     strokeWidth={3}
                     fill="url(#colorPlastic)"
-                    name="Plastic Production"
+                    name="Plastic Production (Mt)"
                   />
                   <Area
                     yAxisId="right"
@@ -631,34 +684,428 @@ function App() {
                     stroke="#38bdf8"
                     strokeWidth={3}
                     fill="url(#colorTemperature)"
-                    name="Temperature Anomaly"
+                    name="Temperature Anomaly (°C)"
                   />
                 </AreaChart>
               </ResponsiveContainer>
-            </div>
+            </motion.div>
+            
+            {/* Toggleable Widget: Live Data Feed or Globe */}
+            <motion.div
+              className="p-5 mt-6 border shadow-md rounded-2xl border-emerald-200/60 bg-gradient-to-br from-emerald-50/80 via-white to-emerald-50/50 backdrop-blur"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ delay: 0.4, duration: 0.8, ease: 'easeOut' }}
+            >
+              {/* Toggle Switch */}
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <motion.span
+                    className="relative flex w-2 h-2"
+                    animate={{ opacity: [1, 0.3, 1] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    <span className="absolute inset-0 rounded-full bg-emerald-500 animate-ping" />
+                    <span className="relative w-2 h-2 rounded-full bg-emerald-500" />
+                  </motion.span>
+                  <span className="text-xs font-semibold tracking-wider uppercase text-emerald-700">
+                    {showGlobe ? 'Global Heat Map' : 'Live Data Feed'}
+                  </span>
+                </div>
+                
+                {/* Toggle Button */}
+                <button
+                  onClick={() => setShowGlobe(!showGlobe)}
+                  className="relative flex items-center w-32 overflow-hidden transition-colors border rounded-full h-7 bg-emerald-100 border-emerald-200 hover:bg-emerald-200"
+                  aria-label="Toggle view"
+                >
+                  <motion.div
+                    className="absolute inset-y-1 left-1 w-[calc(50%-0.5rem)] rounded-full bg-white shadow-sm"
+                    animate={{
+                      x: showGlobe ? 'calc(100% + 0.25rem)' : '0.25rem',
+                    }}
+                    transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                  />
+                  <div className="relative flex items-center justify-around w-full text-xs font-medium">
+                    <span className={`transition-colors ${showGlobe ? 'text-slate-500' : 'text-emerald-700'}`}>
+                      📊
+                    </span>
+                    <span className={`transition-colors ${showGlobe ? 'text-emerald-700' : 'text-slate-500'}`}>
+                      🌍
+                    </span>
+                  </div>
+                </button>
+              </div>
+
+              {/* Conditional Content */}
+              {showGlobe ? (
+                /* Globe with Heat Map */
+                <motion.div
+                  key="globe"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.4 }}
+                  className="relative w-full h-64 overflow-hidden rounded-xl"
+                >
+                  {/* Globe SVG */}
+                  <svg
+                    viewBox="0 0 400 400"
+                    className="w-full h-full"
+                    preserveAspectRatio="xMidYMid meet"
+                  >
+                    {/* Globe base circle */}
+                    <circle
+                      cx="200"
+                      cy="200"
+                      r="180"
+                      fill="url(#globeGradient)"
+                      stroke="#10b981"
+                      strokeWidth="2"
+                      opacity="0.3"
+                    />
+                    
+                    {/* Gradient for globe */}
+                    <defs>
+                      <radialGradient id="globeGradient" cx="50%" cy="50%">
+                        <stop offset="0%" stopColor="#1e40af" stopOpacity="0.8" />
+                        <stop offset="100%" stopColor="#0ea5e9" stopOpacity="0.4" />
+                      </radialGradient>
+                      
+                      {/* Heat zone gradients */}
+                      <radialGradient id="heatZone1" cx="30%" cy="40%">
+                        <stop offset="0%" stopColor="#ef4444" stopOpacity="0.8" />
+                        <stop offset="100%" stopColor="#ef4444" stopOpacity="0" />
+                      </radialGradient>
+                      <radialGradient id="heatZone2" cx="70%" cy="50%">
+                        <stop offset="0%" stopColor="#f97316" stopOpacity="0.7" />
+                        <stop offset="100%" stopColor="#f97316" stopOpacity="0" />
+                      </radialGradient>
+                      <radialGradient id="heatZone3" cx="50%" cy="70%">
+                        <stop offset="0%" stopColor="#eab308" stopOpacity="0.6" />
+                        <stop offset="100%" stopColor="#eab308" stopOpacity="0" />
+                      </radialGradient>
+                      <radialGradient id="heatZone4" cx="20%" cy="70%">
+                        <stop offset="0%" stopColor="#dc2626" stopOpacity="0.9" />
+                        <stop offset="100%" stopColor="#dc2626" stopOpacity="0" />
+                      </radialGradient>
+                    </defs>
+
+                    {/* Heat zones / Red zones */}
+                    <motion.circle
+                      cx="120"
+                      cy="160"
+                      r="45"
+                      fill="url(#heatZone1)"
+                      animate={{
+                        r: [45, 50, 45],
+                        opacity: [0.7, 0.9, 0.7],
+                      }}
+                      transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                    />
+                    <motion.circle
+                      cx="280"
+                      cy="200"
+                      r="40"
+                      fill="url(#heatZone2)"
+                      animate={{
+                        r: [40, 45, 40],
+                        opacity: [0.6, 0.8, 0.6],
+                      }}
+                      transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+                    />
+                    <motion.circle
+                      cx="200"
+                      cy="280"
+                      r="35"
+                      fill="url(#heatZone3)"
+                      animate={{
+                        r: [35, 40, 35],
+                        opacity: [0.5, 0.7, 0.5],
+                      }}
+                      transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+                    />
+                    <motion.circle
+                      cx="80"
+                      cy="280"
+                      r="38"
+                      fill="url(#heatZone4)"
+                      animate={{
+                        r: [38, 43, 38],
+                        opacity: [0.8, 1, 0.8],
+                      }}
+                      transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
+                    />
+
+                    {/* Grid lines for globe effect */}
+                    {[...Array(8)].map((_, i) => (
+                      <motion.path
+                        key={`lat-${i}`}
+                        d={`M 20 ${40 + i * 40} Q 200 ${40 + i * 40} 380 ${40 + i * 40}`}
+                        stroke="#10b981"
+                        strokeWidth="0.5"
+                        fill="none"
+                        opacity="0.2"
+                        animate={{
+                          pathLength: [0, 1, 0],
+                        }}
+                        transition={{
+                          duration: 4,
+                          repeat: Infinity,
+                          delay: i * 0.2,
+                        }}
+                      />
+                    ))}
+                    {[...Array(6)].map((_, i) => (
+                      <motion.path
+                        key={`lon-${i}`}
+                        d={`M ${60 + i * 60} 20 Q ${60 + i * 60} 200 ${60 + i * 60} 380`}
+                        stroke="#10b981"
+                        strokeWidth="0.5"
+                        fill="none"
+                        opacity="0.2"
+                        animate={{
+                          pathLength: [0, 1, 0],
+                        }}
+                        transition={{
+                          duration: 5,
+                          repeat: Infinity,
+                          delay: i * 0.3,
+                        }}
+                      />
+                    ))}
+
+                    {/* Data points / Monitoring stations */}
+                    {[
+                      { x: 120, y: 320, label: 'High' },
+                      { x: 280, y: 340, label: 'Medium' },
+                      { x: 200, y: 370, label: 'Medium' },
+                      { x: 80, y: 370, label: 'Critical' },
+                    ].map((point, idx) => (
+                      <g key={`point-${idx}`}>
+                        <motion.circle
+                          cx={point.x}
+                          cy={point.y}
+                          r="4"
+                          fill="#ef4444"
+                          animate={{
+                            scale: [1, 1.5, 1],
+                            opacity: [0.8, 1, 0.8],
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            delay: idx * 0.3,
+                          }}
+                        />
+                        <motion.circle
+                          cx={point.x}
+                          cy={point.y}
+                          r="8"
+                          fill="none"
+                          stroke="#ef4444"
+                          strokeWidth="1"
+                          opacity="0.5"
+                          animate={{
+                            r: [8, 16, 8],
+                            opacity: [0.5, 0, 0.5],
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            delay: idx * 0.3,
+                          }}
+                        />
+                      </g>
+                    ))}
+                  </svg>
+
+                  {/* Legend */}
+                  {/* Legend */}
+<div className="absolute flex items-center justify-between px-3 py-2 text-xs translate-y-2 border rounded-lg bottom-1 left-4 right-4 bg-white/90 backdrop-blur border-emerald-200/50">
+  <div className="flex items-center gap-4">
+    <div className="flex items-center gap-1.5">
+      <div className="w-3 h-3 bg-red-500 rounded-full" />
+      <span className="text-slate-600">Critical</span>
+    </div>
+    <div className="flex items-center gap-1.5">
+      <div className="w-3 h-3 bg-orange-500 rounded-full" />
+      <span className="text-slate-600">High</span>
+    </div>
+    <div className="flex items-center gap-1.5">
+      <div className="w-3 h-3 bg-yellow-500 rounded-full" />
+      <span className="text-slate-600">Medium</span>
+    </div>
+  </div>
+  <span className="font-medium text-emerald-700">92 Countries Monitored</span>
+</div>
+</motion.div>
+
+              ) : (
+                /* Live Data Feed */
+                <motion.div
+                  key="data"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <motion.span
+                    className="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-medium border border-emerald-200 float-right"
+                    animate={{
+                      boxShadow: [
+                        '0 0 0 0 rgba(16, 185, 129, 0.4)',
+                        '0 0 0 4px rgba(16, 185, 129, 0)',
+                      ],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: 'easeOut',
+                    }}
+                  >
+                    LIVE
+                  </motion.span>
+                  
+                  <div className="mt-2 space-y-3">
+                    <motion.div
+                      className="flex items-start gap-3 text-sm"
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.1, duration: 0.5 }}
+                    >
+                      <span className="text-lg">🌊</span>
+                      <div className="flex-1">
+                        <p className="font-medium text-slate-700">
+                          Plastic drift index
+                        </p>
+                        <p className="text-xs text-slate-500 mt-0.5">
+                          Rising by <span className="font-semibold text-emerald-600">+0.8%</span> this hour
+                        </p>
+                      </div>
+                    </motion.div>
+                    
+                    <motion.div
+                      className="flex items-start gap-3 text-sm"
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.2, duration: 0.5 }}
+                    >
+                      <span className="text-lg">🌡️</span>
+                      <div className="flex-1">
+                        <p className="font-medium text-slate-700">
+                          Ocean surface temperature
+                        </p>
+                        <p className="text-xs text-slate-500 mt-0.5">
+                          Anomaly: <span className="font-semibold text-blue-600">+0.03°C</span>
+                        </p>
+                      </div>
+                    </motion.div>
+                    
+                    <motion.div
+                      className="flex items-start gap-3 text-sm"
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.3, duration: 0.5 }}
+                    >
+                      <span className="text-lg">🧫</span>
+                      <div className="flex-1">
+                        <p className="font-medium text-slate-700">
+                          Microplastic detections
+                        </p>
+                        <p className="text-xs text-slate-500 mt-0.5">
+                          <span className="font-semibold text-emerald-600">+12 samples/hr</span> across monitoring stations
+                        </p>
+                      </div>
+                    </motion.div>
+                  </div>
+                  
+                  {/* Global Impact Indicator */}
+                  <motion.div
+                    className="pt-4 mt-4 border-t border-emerald-200/50"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4, duration: 0.6 }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-base">🌍</span>
+                        <span className="text-xs font-medium text-slate-600">
+                          Global Signal Coverage
+                        </span>
+                      </div>
+                      <span className="text-sm font-semibold text-emerald-700">
+                        92 Countries
+                      </span>
+                    </div>
+                    <div className="mt-2 relative h-1.5 bg-emerald-100 rounded-full overflow-hidden">
+                      <motion.div
+                        className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-emerald-400 to-emerald-500"
+                        initial={{ width: 0 }}
+                        animate={{ width: '92%' }}
+                        transition={{ delay: 0.5, duration: 1.2, ease: 'easeOut' }}
+                      />
+                    </div>
+                  </motion.div>
+                </motion.div>
+              )}
+            </motion.div>
           </motion.div>
           <div className="flex flex-col gap-6">
             <motion.div
-              className="rounded-3xl border border-emerald-100 bg-white/90 p-6 shadow-lg"
+              className="p-6 border shadow-lg rounded-3xl border-emerald-100 bg-white/90"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ delay: 0.1, duration: 0.8, ease: 'easeOut' }}
             >
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <h3 className="text-lg font-semibold text-slate-900">
+              <div className="flex flex-col gap-4 mb-6 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex-1">
+                  <h3 className="mb-1 text-lg font-semibold text-slate-900">
                     Regional Exposure Signal
                   </h3>
                   <p className="text-sm text-slate-600">
                     Microplastic vs CO2 burden by system layer
                   </p>
                 </div>
-                <span className="rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-700">
-                  📊 Realtime
-                </span>
+                <motion.span
+                  className="relative rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1.5 text-sm font-medium text-emerald-700 overflow-hidden shrink-0"
+                  animate={{
+                    boxShadow: [
+                      '0 0 0 0 rgba(16, 185, 129, 0.4)',
+                      '0 0 0 8px rgba(16, 185, 129, 0)',
+                    ],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: 'easeOut',
+                  }}
+                >
+                  <motion.span
+                    className="absolute inset-0 bg-emerald-200/30"
+                    animate={{
+                      x: ['-100%', '100%'],
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: 'linear',
+                    }}
+                  />
+                  <span className="relative z-10 flex items-center gap-1">
+                    <motion.span
+                      animate={{ opacity: [1, 0.3, 1] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                      📊
+                    </motion.span>{' '}
+                    Realtime
+                  </span>
+                </motion.span>
               </div>
-              <div className="mt-6 h-60 w-full">
+              <div className="w-full mt-4 h-60">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={healthImpactData} barCategoryGap="18%">
                     <CartesianGrid
@@ -691,14 +1138,14 @@ function App() {
               </div>
             </motion.div>
             <motion.div
-              className="rounded-3xl border border-emerald-100 bg-gradient-to-br from-emerald-50 via-white to-emerald-50/70 p-6 shadow-lg"
+              className="p-6 border shadow-lg rounded-3xl border-emerald-100 bg-gradient-to-br from-emerald-50 via-white to-emerald-50/70"
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ delay: 0.2, duration: 0.8, ease: 'easeOut' }}
             >
               <div className="flex items-center gap-3">
-                <span className="flex h-12 w-12 items-center justify-center rounded-full border border-emerald-200 bg-white text-2xl">
+                <span className="flex items-center justify-center w-12 h-12 text-2xl bg-white border rounded-full border-emerald-200">
                   🔎
                 </span>
                 <div>
@@ -710,11 +1157,11 @@ function App() {
                   </p>
                 </div>
               </div>
-              <div className="mt-5 grid gap-4 sm:grid-cols-3">
+              <div className="grid gap-4 mt-5 sm:grid-cols-3">
                 {insightStats.map((stat, idx) => (
                   <motion.div
                     key={stat.label}
-                    className="rounded-2xl border border-emerald-100 bg-white/90 p-4 shadow-sm"
+                    className="p-4 border shadow-sm rounded-2xl border-emerald-100 bg-white/90"
                     initial={{ opacity: 0, y: 18 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.4 }}
@@ -723,11 +1170,11 @@ function App() {
                   >
                     <motion.span
                       aria-hidden
-                      className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full border border-emerald-200 bg-emerald-50"
+                      className="inline-flex items-center justify-center w-10 h-10 mb-3 border rounded-full border-emerald-200 bg-emerald-50"
                       animate={{ scale: [1, 1.08, 1] }}
                       transition={{ duration: 2.8, repeat: Infinity, delay: idx * 0.2 }}
                     >
-                      <span className="h-6 w-6 rounded-full bg-gradient-to-br from-emerald-400 to-sky-400" />
+                      <span className="w-6 h-6 rounded-full bg-gradient-to-br from-emerald-400 to-sky-400" />
                     </motion.span>
                     <motion.p
                       className="text-2xl font-semibold text-emerald-600"
@@ -737,7 +1184,7 @@ function App() {
                       transition={{ delay: 0.15 + idx * 0.1, duration: 0.5 }}
                     >
                       <AnimatedCounter value={stat.value} duration={2 + idx * 0.3} />{' '}
-                      <span className="align-top text-xs font-medium text-emerald-500">
+                      <span className="text-xs font-medium align-top text-emerald-500">
                         {stat.unit}
                       </span>
                     </motion.p>
@@ -757,18 +1204,35 @@ function App() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="relative overflow-hidden rounded-full border border-emerald-100 bg-white/80 py-3 shadow-lg"
+          className="relative py-3 overflow-hidden border rounded-full shadow-lg border-emerald-100 bg-white/80"
         >
           <motion.div
-            className="flex gap-8 whitespace-nowrap px-8 text-sm font-medium text-emerald-700"
+            className="flex gap-8 px-8 text-sm font-medium whitespace-nowrap text-emerald-700"
             animate={{ x: ['0%', '-50%'] }}
             transition={{ duration: 22, ease: 'linear', repeat: Infinity }}
           >
             {[...tickerMessages, ...tickerMessages].map((message, index) => (
-              <span key={message + index} className="flex items-center gap-3">
-                <span className="h-2 w-2 rounded-full bg-emerald-500" />
+              <motion.span
+                key={message + index}
+                className="flex items-center gap-3"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <motion.span
+                  className="w-2 h-2 rounded-full bg-emerald-500"
+                  animate={{
+                    scale: [1, 1.3, 1],
+                    opacity: [1, 0.7, 1],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    delay: index * 0.2,
+                  }}
+                />
                 {message}
-              </span>
+              </motion.span>
             ))}
           </motion.div>
         </motion.div>
@@ -780,13 +1244,13 @@ function App() {
           transition={{ duration: 0.7, ease: 'easeOut' }}
           className="flex justify-center"
         >
-          <div className="flex w-full flex-wrap items-center justify-between gap-4 rounded-3xl border border-emerald-100 bg-gradient-to-br from-white via-emerald-50 to-white p-6 text-sm text-slate-600 shadow-lg sm:gap-6 sm:p-8">
+          <div className="flex flex-wrap items-center justify-between w-full gap-4 p-6 text-sm border shadow-lg rounded-3xl border-emerald-100 bg-gradient-to-br from-white via-emerald-50 to-white text-slate-600 sm:gap-6 sm:p-8">
             <motion.div
               className="flex items-center gap-3"
               animate={{ rotate: [0, 4, -4, 0] }}
               transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
             >
-              <span className="flex h-12 w-12 items-center justify-center rounded-full border border-emerald-200 bg-white text-2xl">
+              <span className="flex items-center justify-center w-12 h-12 text-2xl bg-white border rounded-full border-emerald-200">
                 🌍
               </span>
               <div>
@@ -827,7 +1291,7 @@ function App() {
               animate={{ rotate: [0, -4, 4, 0] }}
               transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
             >
-              <span className="flex h-12 w-12 items-center justify-center rounded-full border border-emerald-200 bg-white text-2xl">
+              <span className="flex items-center justify-center w-12 h-12 text-2xl bg-white border rounded-full border-emerald-200">
                 ♻️
               </span>
               <div>
@@ -868,7 +1332,7 @@ function App() {
               animate={{ rotate: [0, 4, -4, 0] }}
               transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
             >
-              <span className="flex h-12 w-12 items-center justify-center rounded-full border border-emerald-200 bg-white text-2xl">
+              <span className="flex items-center justify-center w-12 h-12 text-2xl bg-white border rounded-full border-emerald-200">
                 🫀
               </span>
               <div>
@@ -881,7 +1345,7 @@ function App() {
 
         <section
           id="future"
-          className="rounded-3xl border border-emerald-100 bg-white/85 p-10 shadow-xl backdrop-blur"
+          className="p-10 border shadow-xl rounded-3xl border-emerald-100 bg-white/85 backdrop-blur"
         >
           <motion.h2
             initial={{ opacity: 0, y: 16 }}
@@ -895,11 +1359,11 @@ function App() {
           <p className="mt-3 text-sm text-slate-600">
             Roadmap from present tracking to 2030 policy outcomes - powered by predictive AI, real-time sensing, and collaborative science.
           </p>
-          <div className="mt-10 grid gap-6 md:grid-cols-4">
+          <div className="grid gap-6 mt-10 md:grid-cols-4">
             {timeline.map((item, index) => (
               <motion.div
                 key={item.year}
-                className="relative flex flex-col gap-4 rounded-3xl border border-emerald-100 bg-gradient-to-br from-white via-emerald-50/60 to-white p-6 shadow-lg"
+                className="relative flex flex-col gap-4 p-6 border shadow-lg rounded-3xl border-emerald-100 bg-gradient-to-br from-white via-emerald-50/60 to-white"
                 initial={{ opacity: 0, scale: 0.92 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, amount: 0.3 }}
@@ -923,7 +1387,7 @@ function App() {
                 </div>
                 {index < timeline.length - 1 && (
                   <motion.div
-                    className="absolute -right-3 top-1/2 hidden h-16 w-16 -translate-y-1/2 rounded-full border border-emerald-200 bg-emerald-50/80 md:grid place-items-center"
+                    className="absolute hidden w-16 h-16 -translate-y-1/2 border rounded-full -right-3 top-1/2 border-emerald-200 bg-emerald-50/80 md:grid place-items-center"
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileInView={{ opacity: 0.9, scale: 1 }}
                     viewport={{ once: true }}
@@ -931,7 +1395,7 @@ function App() {
                   >
                     <motion.span
                       aria-hidden
-                      className="h-8 w-8 rounded-full border border-emerald-300/60"
+                      className="w-8 h-8 border rounded-full border-emerald-300/60"
                       animate={{
                         scale: [1, 1.2, 1],
                         opacity: [0.6, 1, 0.6],
@@ -945,7 +1409,56 @@ function App() {
           </div>
         </section>
 
-        <footer className="relative mt-20 overflow-hidden rounded-3xl border border-emerald-100 bg-gradient-to-br from-emerald-50 via-white to-emerald-50/60 text-slate-700 shadow-xl">
+        <footer className="relative mt-20 overflow-visible border shadow-xl rounded-3xl border-emerald-100 bg-gradient-to-br from-emerald-50 via-white to-emerald-50/60 text-slate-700">
+          {/* Floating icons in footer */}
+          <motion.span
+            aria-hidden
+            className="pointer-events-none absolute top-8 left-[8%] text-3xl sm:text-4xl z-0 opacity-60"
+            animate={{
+              y: [0, -12, 6, 0],
+              rotate: [0, 4, -4, 0],
+              scale: [1, 1.1, 0.95, 1],
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            🤖
+          </motion.span>
+          <motion.span
+            aria-hidden
+            className="pointer-events-none absolute top-12 right-[10%] text-3xl sm:text-4xl z-0 opacity-60"
+            animate={{
+              y: [0, -12, 6, 0],
+              rotate: [0, -4, 4, 0],
+              scale: [1, 1.1, 0.95, 1],
+            }}
+            transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            🛰️
+          </motion.span>
+          <motion.span
+            aria-hidden
+            className="pointer-events-none absolute bottom-16 left-[15%] text-3xl sm:text-4xl z-0 opacity-60"
+            animate={{
+              y: [0, -12, 6, 0],
+              rotate: [0, 4, -4, 0],
+              scale: [1, 1.1, 0.95, 1],
+            }}
+            transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            🌡️
+          </motion.span>
+          <motion.span
+            aria-hidden
+            className="pointer-events-none absolute bottom-12 right-[12%] text-3xl sm:text-4xl z-0 opacity-60"
+            animate={{
+              y: [0, -12, 6, 0],
+              rotate: [0, -4, 4, 0],
+              scale: [1, 1.1, 0.95, 1],
+            }}
+            transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            🩺
+          </motion.span>
           <div className="relative">
             <svg
               className="absolute top-0 w-full h-20"
@@ -970,17 +1483,17 @@ function App() {
             </svg>
           </div>
 
-          <div className="relative z-10 max-w-6xl mx-auto grid md:grid-cols-3 gap-8 px-6 py-10 text-sm">
+          <div className="relative z-10 grid max-w-6xl gap-8 px-6 pt-16 pb-10 mx-auto text-sm md:grid-cols-3 lg:gap-12">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.6, ease: 'easeOut' }}
             >
-              <h3 className="text-lg font-semibold mb-3 text-slate-900 flex items-center gap-2">
+              <h3 className="flex items-center gap-2 mb-4 text-lg font-semibold text-slate-900">
                 <span className="text-xl">🌿</span> Eco-Synergy Insight
               </h3>
-              <p className="text-slate-600 leading-relaxed">
+              <p className="leading-relaxed text-slate-600">
                 Advancing global understanding at the intersection of climate, plastic, and health through data-driven intelligence.
               </p>
             </motion.div>
@@ -991,14 +1504,14 @@ function App() {
               viewport={{ once: true, amount: 0.3 }}
               transition={{ delay: 0.1, duration: 0.6, ease: 'easeOut' }}
             >
-              <h3 className="text-lg font-semibold mb-3 text-slate-900 flex items-center gap-2">
+              <h3 className="flex items-center gap-2 mb-4 text-lg font-semibold text-slate-900">
                 <span className="text-xl">🔗</span> Quick Links
               </h3>
-              <ul className="space-y-2 text-slate-600">
+              <ul className="space-y-2.5 text-slate-600">
                 <li>
                   <a
                     href="#vision"
-                    className="hover:text-emerald-600 transition-colors duration-200 flex items-center gap-2"
+                    className="flex items-center gap-2 transition-colors duration-200 hover:text-emerald-600"
                   >
                     <span className="text-xs">→</span> Vision
                   </a>
@@ -1006,7 +1519,7 @@ function App() {
                 <li>
                   <a
                     href="#objectives"
-                    className="hover:text-emerald-600 transition-colors duration-200 flex items-center gap-2"
+                    className="flex items-center gap-2 transition-colors duration-200 hover:text-emerald-600"
                   >
                     <span className="text-xs">→</span> Objectives
                   </a>
@@ -1014,7 +1527,7 @@ function App() {
                 <li>
                   <a
                     href="#insights"
-                    className="hover:text-emerald-600 transition-colors duration-200 flex items-center gap-2"
+                    className="flex items-center gap-2 transition-colors duration-200 hover:text-emerald-600"
                   >
                     <span className="text-xs">→</span> Insights
                   </a>
@@ -1022,7 +1535,7 @@ function App() {
                 <li>
                   <a
                     href="#future"
-                    className="hover:text-emerald-600 transition-colors duration-200 flex items-center gap-2"
+                    className="flex items-center gap-2 transition-colors duration-200 hover:text-emerald-600"
                   >
                     <span className="text-xs">→</span> Future Scope
                   </a>
@@ -1036,36 +1549,36 @@ function App() {
               viewport={{ once: true, amount: 0.3 }}
               transition={{ delay: 0.2, duration: 0.6, ease: 'easeOut' }}
             >
-              <h3 className="text-lg font-semibold mb-3 text-slate-900 flex items-center gap-2">
+              <h3 className="flex items-center gap-2 mb-4 text-lg font-semibold text-slate-900">
                 <span className="text-xl">🤝</span> Partners
               </h3>
-              <p className="text-slate-600 mb-4">
+              <p className="mb-5 leading-relaxed text-slate-600">
                 Supported by:{' '}
                 <span className="font-medium text-emerald-700">UNEP</span> ·{' '}
                 <span className="font-medium text-emerald-700">WHO</span> ·{' '}
                 <span className="font-medium text-emerald-700">IPCC</span> ·{' '}
                 <span className="font-medium text-emerald-700">AI4Planet</span>
               </p>
-              <p className="text-xs text-slate-500">
+              <p className="mb-5 text-xs text-slate-500">
                 Contact:{' '}
                 <a
                   href="mailto:info@ecosyn.org"
-                  className="text-emerald-600 hover:text-emerald-700 underline transition-colors"
+                  className="underline transition-colors text-emerald-600 hover:text-emerald-700"
                 >
-                  info@ecosyn.org
+                  
                 </a>
               </p>
-              <div className="flex gap-3 mt-4">
+              <div className="flex gap-3">
                 <motion.a
                   href="https://github.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-emerald-200 bg-white text-slate-600 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
+                  className="flex items-center justify-center transition-colors bg-white border rounded-full h-9 w-9 border-emerald-200 text-slate-600 hover:bg-emerald-50 hover:text-emerald-600"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   whileTap={{ scale: 0.95 }}
                   aria-label="GitHub"
                 >
-                  <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                   </svg>
                 </motion.a>
@@ -1073,12 +1586,12 @@ function App() {
                   href="https://linkedin.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-emerald-200 bg-white text-slate-600 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
+                  className="flex items-center justify-center transition-colors bg-white border rounded-full h-9 w-9 border-emerald-200 text-slate-600 hover:bg-emerald-50 hover:text-emerald-600"
                   whileHover={{ scale: 1.1, rotate: -5 }}
                   whileTap={{ scale: 0.95 }}
                   aria-label="LinkedIn"
                 >
-                  <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                   </svg>
                 </motion.a>
@@ -1086,12 +1599,12 @@ function App() {
                   href="https://twitter.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-emerald-200 bg-white text-slate-600 hover:bg-emerald-50 hover:text-emerald-600 transition-colors"
+                  className="flex items-center justify-center transition-colors bg-white border rounded-full h-9 w-9 border-emerald-200 text-slate-600 hover:bg-emerald-50 hover:text-emerald-600"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   whileTap={{ scale: 0.95 }}
                   aria-label="Twitter"
                 >
-                  <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
                   </svg>
                 </motion.a>
@@ -1099,23 +1612,21 @@ function App() {
             </motion.div>
           </div>
 
-          <div className="relative z-10 text-center mt-8 text-xs text-slate-500 border-t border-emerald-200/60 pt-6 pb-8 px-6">
-            <p className="flex items-center justify-center gap-2">
-              © 2025 Eco-Synergy Insight | Designed with{' '}
+          <div className="relative z-10 px-6 pt-6 pb-6 mt-6 text-xs text-center border-t text-slate-500 border-emerald-200/60">
+            <p className="flex flex-wrap items-center justify-center gap-2">
+              © 2025 Eco-Synergy Insight
               <motion.span
                 animate={{ rotate: [0, 15, -15, 0] }}
                 transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
                 className="inline-block"
               >
-                🌱
               </motion.span>{' '}
-              and AI
             </p>
           </div>
 
           <motion.button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="fixed bottom-8 right-8 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-emerald-200 bg-white/90 text-emerald-600 shadow-lg backdrop-blur transition-all hover:bg-emerald-50 hover:border-emerald-300"
+            className="fixed z-50 flex items-center justify-center w-12 h-12 transition-all border rounded-full shadow-lg bottom-8 right-8 border-emerald-200 bg-white/90 text-emerald-600 backdrop-blur hover:bg-emerald-50 hover:border-emerald-300"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             whileHover={{ scale: 1.1, y: -4 }}
@@ -1123,7 +1634,7 @@ function App() {
             aria-label="Back to top"
           >
             <svg
-              className="h-6 w-6"
+              className="w-6 h-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
