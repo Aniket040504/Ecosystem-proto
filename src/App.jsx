@@ -302,7 +302,8 @@ function App() {
       >
         <div className="flex flex-wrap items-center justify-between gap-3 text-sm font-medium sm:text-base">
           <a href="#vision" className="flex items-center gap-2 font-semibold text-emerald-700">
-            ⚛️ Eco-Synergy
+            <img src="src/assets/ChatGPT Image Nov 10, 2025, 11_56_38 PM.png" alt="Eco-Synergy Logo" className="object-cover w-8 h-8 rounded-full" />
+            Eco-Synergy
           </a>
           <div className="flex justify-end flex-1 gap-4 sm:gap-6">
             {navItems.map((item, index) => (
