@@ -343,7 +343,7 @@ function App() {
         >
           <div className="space-y-6">
             <p className="inline-flex items-center gap-2 px-4 py-1 text-sm font-medium tracking-wide border rounded-full border-emerald-100 bg-emerald-50 text-emerald-600">
-              ⚛️ Eco-Synergy Insight Dashboard
+             🌳 Eco-Synergy Insight Dashboard
             </p>
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
