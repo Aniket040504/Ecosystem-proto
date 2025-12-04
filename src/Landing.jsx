@@ -730,7 +730,7 @@ function LandingPage() {
                             PM2.5 Air Quality
                           </p>
                           <p className="text-xs text-slate-600">
-                            Current: <span className="font-bold text-orange-600">42 µg/m³</span> (Moderate risk)
+                            Current: <span className="font-bold text-orange-600">282 µg/m³</span> (Moderate risk)
                           </p>
                         </div>
                       </div>
