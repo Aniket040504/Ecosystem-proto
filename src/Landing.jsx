@@ -1,6 +1,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
+import ecolog from '../src/assets/ecolog.png'
 import {
   Area,
   AreaChart,
@@ -353,7 +354,7 @@ function LandingPage() {
       >
         <div className="flex flex-wrap items-center justify-between gap-3 text-sm font-medium sm:text-base">
           <a href="#vision" className="flex items-center gap-2 font-semibold text-emerald-700">
-            <img src="/src/assets/ChatGPT Image Nov 10, 2025, 11_56_38 PM.png" alt="Eco-Synergy Logo" className="object-cover w-8 h-8 rounded-full" />
+            <img src={ecolog} alt="Eco-Synergy Logo" className="object-cover w-8 h-8 rounded-full" />
             Eco-Synergy
           </a>
           <div className="flex justify-end flex-1 gap-4 sm:gap-6">
