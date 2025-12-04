@@ -118,23 +118,49 @@ const baseDataset = (() => {
 function generateRecommendations(d) {
   const recs = [];
 
-  if (d.plasticScore >= 0.6 || d.viirs > 1)
+  // 🔥 PLASTIC / FIRE RISK
+  if (d.plasticScore >= 0.6 || d.viirs > 1) {
     recs.push(
-      "<strong>Immediate:</strong> Deploy firefighting, issue N95 mask advisories, suspend outdoor classes."
+      "<strong>Immediate:</strong> Deploy firefighting teams, issue N95 mask advisories, suspend outdoor classes and sports, and restrict access around the landfill perimeter."
     );
-  else if (d.plasticScore >= 0.35)
+  } else if (d.plasticScore >= 0.35) {
     recs.push(
-      "<strong>Short-term:</strong> Increase surveillance, restrict open burning, limit waste access."
+      "<strong>Short-term:</strong> Increase surveillance, restrict open burning, limit public and waste-picker access near hotspots, and pre-position firefighting resources."
     );
-  else recs.push("<strong>Maintain:</strong> Routine monitoring and cleanups.");
+  } else {
+    recs.push(
+      "<strong>Maintain:</strong> Routine monitoring, hotspot patrolling, and controlled waste placement to avoid fresh ignition zones."
+    );
+  }
 
-  if (d.healthScore >= 0.6)
+  // 🏥 HEALTH SYSTEM RESPONSE
+  if (d.healthScore >= 0.6) {
     recs.push(
-      "<strong>Health:</strong> Activate mobile respiratory clinics; alert hospitals."
+      "<strong>Health system:</strong> Activate mobile respiratory clinics, alert nearby hospitals and clinics, and stock inhalers, steroids, and N95 masks for vulnerable groups."
     );
-  else if (d.healthScore >= 0.4)
-    recs.push("<strong>Health:</strong> Provide PPE to sanitation workers.");
-  else recs.push("<strong>Health:</strong> Routine population health tracking.");
+  } else if (d.healthScore >= 0.4) {
+    recs.push(
+      "<strong>Health system:</strong> Provide PPE and N95/KN95 masks to sanitation workers and firefighters, and notify local PHCs about likely spike in respiratory complaints."
+    );
+  } else {
+    recs.push(
+      "<strong>Health system:</strong> Continue routine population health tracking and periodic lung-function screening for workers and nearby residents."
+    );
+  }
+
+  // 😷 COMMUNITY PREVENTIVE ACTIONS
+  let precautions;
+  if (d.healthScore >= 0.6) {
+    precautions =
+      "<strong>Precautions for residents:</strong> Stay indoors as much as possible; wear N95 or KN95 masks outdoors; avoid morning/evening walks near the landfill; keep windows closed; use air purifiers or DIY filters if available; ensure children, elderly, and those with asthma strictly avoid the smoke plume.";
+  } else if (d.healthScore >= 0.4) {
+    precautions =
+      "<strong>Precautions for residents:</strong> Prefer wearing masks outdoors (especially N95/KN95 near the landfill), avoid intense outdoor exercise, keep drinking water handy to stay hydrated, and monitor children and elderly for cough, wheeze, or eye irritation.";
+  } else {
+    precautions =
+      "<strong>Precautions for residents:</strong> Encourage mask use for workers near the site, avoid burning waste at household or community level, and report any visible smoke or flare-ups to local authorities early.";
+  }
+  recs.push(precautions);
 
   return recs;
 }
@@ -189,7 +215,6 @@ export default function EcoSynergyBhalswa() {
   const leafletMapRef = useRef(null);
   const bhalswaMarkerRef = useRef(null);
 
-  // separate canvases / chart instances for small & large charts
   const smallChartCanvasRef = useRef(null);
   const largeChartCanvasRef = useRef(null);
   const smallChartRef = useRef(null);
@@ -224,7 +249,6 @@ export default function EcoSynergyBhalswa() {
     }).addTo(map);
 
     const delhiAreas = [
-      // critical
       { name: "Bhalswa Landfill", coords: [28.735, 77.17], type: "critical" },
       { name: "Okhla Landfill", coords: [28.5329, 77.2812], type: "critical" },
       { name: "Ghazipur Landfill", coords: [28.6208, 77.3307], type: "critical" },
@@ -526,7 +550,8 @@ export default function EcoSynergyBhalswa() {
         padding: 20,
         fontFamily: "Inter, sans-serif",
         background: "#f3f6fb",
-        overflowX: "hidden"
+        overflowX: "hidden",
+        position: "relative"
       }}
     >
       <style>{`
@@ -537,6 +562,8 @@ export default function EcoSynergyBhalswa() {
         button { padding:6px 10px; border-radius:999px; border:none; background:#2563eb; color:white; font-size:13px; cursor:pointer; }
         .search-btn { padding:6px 16px; border-radius:8px; background:#2563eb; color:white; font-weight:600; font-size:14px; border:none; margin-left:8px; cursor:pointer; transition:background 0.2s; }
         .search-btn:hover { background:#1d4ed8; }
+        .nav-btn { padding:6px 14px; border-radius:999px; background:#0f172a; color:#e5e7eb; font-size:12px; font-weight:600; border:1px solid #1e293b; display:inline-flex; align-items:center; gap:6px; }
+        .nav-btn:hover { background:#020617; }
         @media (max-width: 900px) {
           .layout-grid { grid-template-columns: 1fr !important; }
         }
@@ -560,7 +587,7 @@ export default function EcoSynergyBhalswa() {
         .badge-high {
           background:#fef3c7;
           color:#b45309;
-          border:1px solid #fde68a;
+          border:1px solid:#fde68a;
         }
         .badge-moderate {
           background:#e0f2fe;
@@ -582,7 +609,49 @@ export default function EcoSynergyBhalswa() {
           color:#64748b;
           margin-top:2px;
         }
+        .date-selector {
+          margin-top:8px;
+          padding:6px 8px;
+          background:#f8fafc;
+          border-radius:10px;
+          display:flex;
+          align-items:center;
+          justify-content:space-between;
+          gap:8px;
+        }
+        .date-selector-label {
+          font-size:11px;
+          font-weight:600;
+          color:#475569;
+          white-space:nowrap;
+        }
+        .date-selector input[type="date"] {
+          flex:1;
+          padding:4px 8px;
+          border-radius:8px;
+          border:1px solid #e2e8f0;
+          font-size:12px;
+          color:#0f172a;
+          background:#ffffff;
+        }
       `}</style>
+
+      {/* TOP-RIGHT NAV BUTTON */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          marginBottom: 8
+        }}
+      >
+        <button
+          className="nav-btn"
+          onClick={() => window.history.back()}
+          // if you have routing: replace above with e.g. window.location.href = "/dashboard"
+        >
+          ← Back to dashboard
+        </button>
+      </div>
 
       <h1
         style={{
@@ -724,6 +793,18 @@ export default function EcoSynergyBhalswa() {
                 </div>
                 <div className="badge badge-phase">{riskMeta.phase}</div>
               </div>
+            </div>
+
+            {/* DATE SELECTION TAB */}
+            <div className="date-selector">
+              <span className="date-selector-label">Scenario date</span>
+              <input
+                type="date"
+                value={selectedDate}
+                min={baseDataset[0].date}
+                max={baseDataset[baseDataset.length - 1].date}
+                onChange={(e) => setSelectedDate(e.target.value)}
+              />
             </div>
 
             <div style={{ marginTop: 8 }}>
