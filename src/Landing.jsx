@@ -1,10 +1,9 @@
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import ecolog from '../src/assets/ecolog.png'
+import banner from '../src/assets/banner.png'
 import {
-  Area,
-  AreaChart,
   Bar,
   BarChart,
   CartesianGrid,
@@ -17,7 +16,7 @@ import {
 import outputImage from './assets/output.png'
 import outputImage2 from './assets/output (2).png'
 
-// Animated counter component
+// Animated counter component (currently unused but kept if you want to hook later)
 const AnimatedCounter = ({ value, duration = 2 }) => {
   const [displayValue, setDisplayValue] = useState(0)
   const numValue = parseFloat(value.replace(/[^\d.]/g, ''))
@@ -80,9 +79,9 @@ function LandingPage() {
       India: 2000,
       Global: 200,
     },
-  ];
+  ]
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -188,45 +187,6 @@ function LandingPage() {
     },
   ]
 
-  const insightData = [
-    { year: 1990, temperature: 0.3, plastic: 110 },
-    { year: 1995, temperature: 0.35, plastic: 150 },
-    { year: 2000, temperature: 0.41, plastic: 210 },
-    { year: 2005, temperature: 0.47, plastic: 290 },
-    { year: 2010, temperature: 0.56, plastic: 360 },
-    { year: 2015, temperature: 0.63, plastic: 440 },
-    { year: 2020, temperature: 0.74, plastic: 520 },
-    { year: 2025, temperature: 0.82, plastic: 615 },
-  ]
-
-  const healthImpactData = [
-    { layer: 'Coastal', exposure: 52, co2: 28 },
-    { layer: 'Urban', exposure: 66, co2: 41 },
-    { layer: 'Freshwater', exposure: 48, co2: 22 },
-    { layer: 'Arctic', exposure: 38, co2: 18 },
-  ]
-
-  const insightStats = [
-    {
-      value: '8M',
-      unit: 'tonnes',
-      label: 'Plastic enters oceans annually',
-      note: 'Real-time ingestion calibrates counter-measures.',
-    },
-    {
-      value: '2.6x',
-      unit: 'rise',
-      label: 'Microplastic exposure since 2000',
-      note: 'Linked to respiratory and endocrine stressors.',
-    },
-    {
-      value: '74%',
-      unit: 'alignment',
-      label: 'CO2 spikes align with plastic output',
-      note: 'Highlights the carbon-polymer production feedback loop.',
-    },
-  ]
-
   const tickerMessages = [
     'Global Microplastic Exposure Index up 2.6x since 2000',
     'Satellite Ocean Watch: New plastic gyre detected (South Pacific)',
@@ -241,39 +201,9 @@ function LandingPage() {
     { icon: '🩺', className: 'bottom-28 right-[14%]' },
   ]
 
-  const CustomTooltip = ({ active, payload, label }) => {
-    if (!active || !payload?.length) return null
-    const plastic = payload.find((item) => item.dataKey === 'plastic')
-    const temperature = payload.find((item) => item.dataKey === 'temperature')
-
-    return (
-      <div className="p-3 text-xs border shadow-lg rounded-xl border-emerald-200 bg-white/95 text-slate-800 backdrop-blur">
-        <p className="text-sm font-semibold text-emerald-700">{label}</p>
-        <p>Plastic Production: {plastic?.value} Mt</p>
-        <p>Global Temperature: {temperature?.value.toFixed(2)} degC anomaly</p>
-        <p className="mt-2 text-emerald-600">
-          Microplastic rise correlates with CO₂ levels
-        </p>
-      </div>
-    )
-  }
-
-  const CustomBarTooltip = ({ active, payload, label }) => {
-    if (!active || !payload?.length) return null
-    const exposure = payload.find((item) => item.dataKey === 'exposure')
-    const co2 = payload.find((item) => item.dataKey === 'co2')
-
-    return (
-      <div className="p-3 text-xs border shadow-lg rounded-xl border-emerald-200 bg-white/92 text-slate-800 backdrop-blur">
-        <p className="text-sm font-semibold">{label} systems</p>
-        <p>Microplastic exposure: {exposure?.value} index</p>
-        <p>CO2 burden: {co2?.value} Mt</p>
-      </div>
-    )
-  }
-
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-slate-100 text-slate-900">
+      {/* Soft global aurora background */}
       <motion.div
         aria-hidden
         className="absolute inset-0 pointer-events-none"
@@ -298,6 +228,8 @@ function LandingPage() {
         animate={{ y: [0, -20, 10, 0], rotate: [0, -8, 6, 0] }}
         transition={{ duration: 14, repeat: Infinity, ease: 'easeInOut' }}
       />
+
+      {/* Floating icons */}
       {floatingIcons.map(({ icon, className }, index) => (
         <motion.span
           key={icon + index}
@@ -313,6 +245,7 @@ function LandingPage() {
           {icon}
         </motion.span>
       ))}
+
       {/* Additional floating particles */}
       {[...Array(6)].map((_, i) => (
         <motion.div
@@ -337,7 +270,8 @@ function LandingPage() {
           }}
         />
       ))}
-      {/* Mouse parallax effect */}
+
+      {/* Mouse parallax glow */}
       <motion.div
         aria-hidden
         className="absolute inset-0 pointer-events-none"
@@ -346,6 +280,7 @@ function LandingPage() {
         }}
       />
 
+      {/* Top nav */}
       <motion.nav
         initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -386,16 +321,34 @@ function LandingPage() {
       </motion.nav>
 
       <div className="relative flex flex-col gap-20 px-6 pt-24 mx-auto max-w-7xl pb-28 sm:px-10 lg:px-12">
+        {/* HERO SECTION WITH BLURRED MAP BG */}
         <motion.header
           id="vision"
           initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: 'easeOut' }}
-          className="grid gap-12 rounded-3xl border border-emerald-100/80 bg-white/70 p-10 shadow-xl backdrop-blur lg:grid-cols-[1.2fr,1fr] lg:items-center"
+          className="relative grid gap-12 overflow-hidden rounded-3xl border border-emerald-100/80 bg-white/70 p-10 shadow-xl backdrop-blur lg:grid-cols-[1.2fr,1fr] lg:items-center"
         >
-          <div className="space-y-6">
+          {/* Blurred world map from internet + red hotspots */}
+          <div className="absolute inset-0 pointer-events-none -z-10">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/World_map_blank_without_borders.svg/2000px-World_map_blank_without_borders.svg.png"
+              alt="Blurred global map"
+              className="object-cover w-full h-full scale-110 opacity-60 blur-md"
+            />
+            {/* Heat / risk blobs */}
+            <div className="absolute inset-0 mix-blend-multiply opacity-70">
+              <div className="absolute rounded-full w-44 h-44 bg-red-500/40 blur-3xl top-16 left-20" />
+              <div className="absolute w-56 h-56 rounded-full bg-red-600/40 blur-3xl top-1/3 right-8" />
+              <div className="absolute rounded-full w-36 h-36 bg-orange-500/40 blur-3xl bottom-10 left-1/3" />
+            </div>
+            {/* Slight dark tint to keep text readable */}
+            <div className="absolute inset-0 bg-slate-900/10" />
+          </div>
+
+          <div className="relative z-10 space-y-6">
             <p className="inline-flex items-center gap-2 px-4 py-1 text-sm font-medium tracking-wide border rounded-full border-emerald-100 bg-emerald-50 text-emerald-600">
-             🌳 Eco-Synergy Insight Dashboard
+              🌳 Eco-Synergy Insight Dashboard
             </p>
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
@@ -403,8 +356,10 @@ function LandingPage() {
               transition={{ delay: 0.1, duration: 0.8, ease: 'easeOut' }}
               className="text-3xl font-semibold text-slate-900 sm:text-4xl lg:text-5xl"
             >
-              Integrating Climate, Plastic, and Health Data for Global
-              Sustainability
+              Integrating{' '}
+              <span className="text-blue-600">Climate</span>,{' '}
+              <span className="text-cyan-500">Plastic</span>, and{' '}
+              <span className="text-rose-700">Health</span> Data for Global Sustainability
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 18 }}
@@ -426,51 +381,25 @@ function LandingPage() {
               Bridging Climate, Plastic, and Health Data for Global Insight.
             </motion.div>
           </div>
+
+          {/* RIGHT HERO: static banner, zoom on hover */}
           <motion.div
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 1.1, ease: 'easeOut' }}
-            className="relative h-64 overflow-hidden border shadow-2xl rounded-3xl border-emerald-100 bg-gradient-to-br from-slate-900/70 to-slate-900/40 backdrop-blur lg:h-80"
+            className="relative h-64 overflow-hidden border shadow-2xl rounded-3xl border-emerald-100 bg-slate-900/60 lg:h-80"
           >
-            <motion.div
-              className="absolute inset-0"
-              initial={{ backgroundPosition: '0% 0%' }}
-              animate={{ backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'] }}
-              transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-              style={{
-                backgroundImage:
-                  'url(https://images.unsplash.com/photo-1465146633011-14f8e0781093?auto=format&fit=crop&w=1200&q=80)',
-                backgroundSize: 'cover',
-                filter: 'contrast(1.1) saturate(1.1)',
-              }}
+            <motion.img
+              src={banner}
+              alt="Eco-Synergy Insight Banner"
+              className="w-full h-full"
+              initial={{ scale: 1 }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
             />
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900/20 to-slate-950 opacity-80"
-              initial={{ opacity: 0.7 }}
-              animate={{ opacity: [0.6, 0.85, 0.6] }}
-              transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-            />
-            <motion.div
-              className="absolute flex items-center justify-center w-24 h-24 -translate-x-1/2 border rounded-full shadow-inner bottom-8 left-1/2 border-emerald-400/50 bg-emerald-500/20 shadow-emerald-500/40"
-              animate={{ rotate: [0, 360] }}
-              transition={{ duration: 36, repeat: Infinity, ease: 'linear' }}
-            >
-              <motion.div
-                className="w-16 h-16 border rounded-full border-emerald-200/40 bg-gradient-to-br from-emerald-500/40 to-blue-400/30"
-                animate={{
-                  rotate: [0, -360],
-                  scale: [1, 1.08, 1],
-                }}
-                transition={{
-                  duration: 24,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }}
-              />
-            </motion.div>
           </motion.div>
         </motion.header>
 
+        {/* OBJECTIVES */}
         <section
           id="objectives"
           className="grid gap-6 p-8 border shadow-xl rounded-3xl border-emerald-100 bg-white/80 lg:grid-cols-4 lg:gap-8"
@@ -546,6 +475,7 @@ function LandingPage() {
           ))}
         </section>
 
+        {/* ARCHITECTURE */}
         <section
           id="architecture"
           className="p-10 border shadow-xl rounded-3xl border-emerald-100 bg-white/85 backdrop-blur"
@@ -628,6 +558,7 @@ function LandingPage() {
           </div>
         </section>
 
+        {/* INSIGHTS SECTION */}
         <section
           id="insights"
           className="p-10 border shadow-xl rounded-3xl border-emerald-100 bg-white/85"
@@ -712,7 +643,7 @@ function LandingPage() {
                   >
                     ⚡ LIVE
                   </motion.span>
-                  
+
                   <div className="space-y-3">
                     <motion.div
                       className="p-3 transition-shadow border shadow-sm bg-white/80 border-emerald-100 rounded-xl hover:shadow-md"
@@ -735,7 +666,7 @@ function LandingPage() {
                         </div>
                       </div>
                     </motion.div>
-                    
+
                     <motion.div
                       className="p-3 transition-shadow border shadow-sm bg-white/80 border-emerald-100 rounded-xl hover:shadow-md"
                       initial={{ opacity: 0, x: -10 }}
@@ -757,7 +688,7 @@ function LandingPage() {
                         </div>
                       </div>
                     </motion.div>
-                    
+
                     <motion.div
                       className="p-3 transition-shadow border shadow-sm bg-white/80 border-emerald-100 rounded-xl hover:shadow-md"
                       initial={{ opacity: 0, x: -10 }}
@@ -780,7 +711,7 @@ function LandingPage() {
                       </div>
                     </motion.div>
                   </div>
-                  
+
                   {/* Global Impact Indicator */}
                   <motion.div
                     className="pt-4 mt-4 border-t border-emerald-200/50"
@@ -819,7 +750,7 @@ function LandingPage() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    Open Bhalswa Insight Dashboard →
+                    Open Bhalswa Landfill Fire →
                   </motion.button>
                 </motion.div>
               </motion.div>
@@ -997,6 +928,7 @@ function LandingPage() {
           </motion.div>
         )}
 
+        {/* Marquee / ticker */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -1035,6 +967,7 @@ function LandingPage() {
           </motion.div>
         </motion.div>
 
+        {/* Climate / Plastic / Health strip */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -1141,6 +1074,7 @@ function LandingPage() {
           </div>
         </motion.div>
 
+        {/* FUTURE SCOPE */}
         <section
           id="future"
           className="p-10 border shadow-xl rounded-3xl border-emerald-100 bg-white/85 backdrop-blur"
@@ -1207,6 +1141,7 @@ function LandingPage() {
           </div>
         </section>
 
+        {/* FOOTER */}
         <footer className="relative mt-20 overflow-visible border shadow-xl rounded-3xl border-emerald-100 bg-gradient-to-br from-emerald-50 via-white to-emerald-50/60 text-slate-700">
           {/* Floating icons in footer */}
           <motion.span
@@ -1348,7 +1283,7 @@ function LandingPage() {
               transition={{ delay: 0.2, duration: 0.6, ease: 'easeOut' }}
             >
               <h3 className="flex items-center gap-2 mb-4 text-lg font-semibold text-slate-900">
-                <span className="text-xl">🤝</span> Partners
+                <span className="text-xl">📞</span> Contact Us
               </h3>
               <p className="mb-5 leading-relaxed text-slate-600">
                 Supported by:{' '}
@@ -1363,26 +1298,13 @@ function LandingPage() {
                   href="mailto:info@ecosyn.org"
                   className="underline transition-colors text-emerald-600 hover:text-emerald-700"
                 >
-                  
+                 vineeta.palwal@gmail.com
                 </a>
               </p>
               <div className="flex gap-3">
                 <motion.a
-                  href="https://github.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center transition-colors bg-white border rounded-full h-9 w-9 border-emerald-200 text-slate-600 hover:bg-emerald-50 hover:text-emerald-600"
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  whileTap={{ scale: 0.95 }}
-                  aria-label="GitHub"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                  </svg>
-                </motion.a>
-                <motion.a
                   href="https://linkedin.com"
-                  target="_blank"
+                  target="https://www.linkedin.com/in/vineeta-sharma-0789001a3/"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center transition-colors bg-white border rounded-full h-9 w-9 border-emerald-200 text-slate-600 hover:bg-emerald-50 hover:text-emerald-600"
                   whileHover={{ scale: 1.1, rotate: -5 }}
@@ -1391,19 +1313,6 @@ function LandingPage() {
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                  </svg>
-                </motion.a>
-                <motion.a
-                  href="https://twitter.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center transition-colors bg-white border rounded-full h-9 w-9 border-emerald-200 text-slate-600 hover:bg-emerald-50 hover:text-emerald-600"
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  whileTap={{ scale: 0.95 }}
-                  aria-label="Twitter"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
                   </svg>
                 </motion.a>
               </div>
@@ -1422,6 +1331,7 @@ function LandingPage() {
             </p>
           </div>
 
+          {/* Back to top button */}
           <motion.button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="fixed z-50 flex items-center justify-center w-12 h-12 transition-all border rounded-full shadow-lg bottom-8 right-8 border-emerald-200 bg-white/90 text-emerald-600 backdrop-blur hover:bg-emerald-50 hover:border-emerald-300"
