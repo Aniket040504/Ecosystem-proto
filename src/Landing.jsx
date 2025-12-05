@@ -1295,7 +1295,7 @@ function LandingPage() {
               <p className="mb-5 text-xs text-slate-500">
                 Contact:{' '}
                 <a
-                  href="mailto:info@ecosyn.org"
+                  href="mailto:vineeta.palwal@gmail.com"
                   className="underline transition-colors text-emerald-600 hover:text-emerald-700"
                 >
                  vineeta.palwal@gmail.com
@@ -1303,7 +1303,7 @@ function LandingPage() {
               </p>
               <div className="flex gap-3">
                 <motion.a
-                  href="https://linkedin.com"
+                  href="https://linkedin.com/in/vineeta-sharma-0789001a3/"
                   target="https://www.linkedin.com/in/vineeta-sharma-0789001a3/"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center transition-colors bg-white border rounded-full h-9 w-9 border-emerald-200 text-slate-600 hover:bg-emerald-50 hover:text-emerald-600"
